@@ -24,7 +24,7 @@ export function HabitComparisonChart({ data }: { data: { habit: Habit; rate: num
           <YAxis dataKey="name" type="category" tick={{ fontSize: 11, fill: "hsl(var(--foreground))" }} width={90} axisLine={false} tickLine={false} />
           <Tooltip
             contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 12 }}
-            formatter={(value: number) => [`${value}%`, "Completion"]}
+            formatter={(value) => [`${value}%`, "Completion"]}
           />
           <Bar dataKey="rate" radius={[0, 4, 4, 0]} barSize={14}>
             {chartData.map((entry, i) => (

@@ -68,6 +68,8 @@ export function useTodayDiet() {
           actual_protein_g: null,
           actual_carbs_g: null,
           actual_fat_g: null,
+          description: null,
+          meal_type: null,
           logged_at: "",
         },
       ];

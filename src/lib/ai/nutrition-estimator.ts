@@ -32,18 +32,18 @@ export async function estimateNutrition(foodDescription: string): Promise<Nutrit
     systemInstruction: SYSTEM_INSTRUCTION,
     history: [],
     message: foodDescription,
-    maxOutputTokens: 80,
+    maxOutputTokens: 1024, // plenty once thinking is off; JSON output is ~30 tokens
     temperature: 0.2,
+    disableThinking: true, // <-- this is the actual fix
   });
 
-  // Gemini occasionally wraps JSON in ```json fences despite instructions — strip defensively.
   const cleaned = raw.replace(/```json|```/g, "").trim();
 
   let parsed: unknown;
   try {
     parsed = JSON.parse(cleaned);
   } catch {
-    throw new Error("Could not parse a nutrition estimate for that description. Try rephrasing it.");
+    throw new Error(`Could not parse a nutrition estimate for that description. Raw response: ${raw}`);
   }
 
   const p = parsed as Partial<NutritionEstimate>;

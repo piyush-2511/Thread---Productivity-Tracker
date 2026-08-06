@@ -12,7 +12,7 @@ export function EnergyChart({ data }: { data: { bucket: string; avgScore: number
           <YAxis hide domain={[0, 100]} />
           <Tooltip
             contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 12 }}
-            formatter={(value: number) => [`${value}/100`, "Avg energy"]}
+            formatter={(value) => [`${value}/100`, "Avg energy"]}
           />
           <Bar dataKey="avgScore" fill="hsl(var(--accent))" radius={[4, 4, 0, 0]} />
         </BarChart>

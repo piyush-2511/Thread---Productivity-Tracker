@@ -16,7 +16,9 @@ export async function POST(request: Request) {
 
   const body = await request.json();
   const description: string = body.description;
-  const mealType: string | undefined = body.meal_type;
+  const MEAL_TYPES = ["breakfast", "lunch", "dinner", "snack"] as const;
+  const rawMealType = body.meal_type;
+  const mealType = MEAL_TYPES.includes(rawMealType) ? (rawMealType as (typeof MEAL_TYPES)[number]) : null;
   const logDate: string = body.log_date ?? new Date().toISOString().split("T")[0];
 
   if (!description || !description.trim()) {
@@ -32,7 +34,7 @@ export async function POST(request: Request) {
         user_id: user.id,
         log_date: logDate,
         description: description.trim(),
-        meal_type: mealType ?? null,
+        meal_type: mealType,
         is_eaten: true,
         actual_calories: nutrition.calories,
         actual_protein_g: nutrition.protein_g,

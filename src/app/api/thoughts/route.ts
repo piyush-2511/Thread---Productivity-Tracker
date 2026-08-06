@@ -9,7 +9,9 @@ export async function GET(request: Request) {
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const { searchParams } = new URL(request.url);
-  const tag = searchParams.get("tag");
+  const rawTag = searchParams.get("tag");
+  const TAGS = ["mood", "quote", "insight"] as const;
+  const tag = TAGS.includes(rawTag as (typeof TAGS)[number]) ? (rawTag as (typeof TAGS)[number]) : null;
 
   let query = supabase.from("thoughts").select("*").order("entry_date", { ascending: false });
   if (tag) query = query.eq("tag", tag);

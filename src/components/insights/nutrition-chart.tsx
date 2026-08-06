@@ -17,7 +17,7 @@ export function NutritionChart({ data, targetCalories }: { data: DailyNutritionR
           <YAxis hide />
           <Tooltip
             contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 12 }}
-            formatter={(value: number) => [`${value} kcal`, "Logged"]}
+            formatter={(value) => [`${value} kcal`, "Logged"]}
           />
           {targetCalories && <ReferenceLine y={targetCalories} stroke="hsl(var(--accent))" strokeDasharray="4 4" />}
           <Bar dataKey="calories" fill="hsl(var(--success))" radius={[3, 3, 0, 0]} />

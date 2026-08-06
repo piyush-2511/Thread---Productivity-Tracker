@@ -161,24 +161,66 @@ export type ChatMessage = {
   created_at: string;
 };
 
+/** Small helper so every table entry gets the same shape without repeating Relationships each time. */
+type TableDef<Row> = {
+  Row: Row;
+  Insert: Partial<Row>;
+  Update: Partial<Row>;
+  Relationships: [];
+};
+
 export type Database = {
   public: {
     Tables: {
-      todos: { Row: Todo; Insert: Partial<Todo>; Update: Partial<Todo> };
-      habits: { Row: Habit; Insert: Partial<Habit>; Update: Partial<Habit> };
-      habit_logs: { Row: HabitLog; Insert: Partial<HabitLog>; Update: Partial<HabitLog> };
-      daily_tasks: { Row: DailyTask; Insert: Partial<DailyTask>; Update: Partial<DailyTask> };
-      daily_task_logs: { Row: DailyTaskLog; Insert: Partial<DailyTaskLog>; Update: Partial<DailyTaskLog> };
-      challenges: { Row: Challenge; Insert: Partial<Challenge>; Update: Partial<Challenge> };
-      challenge_tasks: { Row: ChallengeTask; Insert: Partial<ChallengeTask>; Update: Partial<ChallengeTask> };
-      challenge_logs: { Row: ChallengeLog; Insert: Partial<ChallengeLog>; Update: Partial<ChallengeLog> };
-      thoughts: { Row: Thought; Insert: Partial<Thought>; Update: Partial<Thought> };
-      energy_logs: { Row: EnergyLog; Insert: Partial<EnergyLog>; Update: Partial<EnergyLog> };
-      screen_time_logs: { Row: ScreenTimeLog; Insert: Partial<ScreenTimeLog>; Update: Partial<ScreenTimeLog> };
-      diet_plan_meals: { Row: DietPlanMeal; Insert: Partial<DietPlanMeal>; Update: Partial<DietPlanMeal> };
-      nutrition_targets: { Row: NutritionTarget; Insert: Partial<NutritionTarget>; Update: Partial<NutritionTarget> };
-      diet_logs: { Row: DietLog; Insert: Partial<DietLog>; Update: Partial<DietLog> };
-      chat_messages: { Row: ChatMessage; Insert: Partial<ChatMessage>; Update: Partial<ChatMessage> };
+      todos: TableDef<Todo>;
+      habits: TableDef<Habit>;
+      habit_logs: TableDef<HabitLog>;
+      daily_tasks: TableDef<DailyTask>;
+      daily_task_logs: TableDef<DailyTaskLog>;
+      challenges: TableDef<Challenge>;
+      challenge_tasks: TableDef<ChallengeTask>;
+      challenge_logs: TableDef<ChallengeLog>;
+      thoughts: TableDef<Thought>;
+      energy_logs: TableDef<EnergyLog>;
+      screen_time_logs: TableDef<ScreenTimeLog>;
+      diet_plan_meals: TableDef<DietPlanMeal>;
+      nutrition_targets: TableDef<NutritionTarget>;
+      diet_logs: TableDef<DietLog>;
+      chat_messages: TableDef<ChatMessage>;
+      ai_greetings: TableDef<{
+        id: string;
+        user_id: string;
+        greeting_date: string;
+        time_bucket: "morning" | "afternoon" | "evening" | "night";
+        message: string;
+        created_at: string;
+      }>;
     };
+    Views: {
+      daily_completion_summary: {
+        Row: {
+          user_id: string;
+          log_date: string;
+          completed_count: number;
+          total_count: number;
+          completion_rate: number;
+        };
+        Relationships: [];
+      };
+      daily_nutrition_summary: {
+        Row: {
+          user_id: string;
+          log_date: string;
+          total_calories: number | null;
+          total_protein_g: number | null;
+          total_carbs_g: number | null;
+          total_fat_g: number | null;
+        };
+        Relationships: [];
+      };
+    };
+    Functions: Record<string, never>;
+    Enums: Record<string, never>;
+    CompositeTypes: Record<string, never>;
   };
 };

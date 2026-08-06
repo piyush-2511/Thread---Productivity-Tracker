@@ -18,7 +18,7 @@ export function CompletionTrendChart({ data }: { data: DailyCompletionRow[] }) {
           <YAxis domain={[0, 100]} tick={{ fontSize: 9, fill: "hsl(var(--muted-foreground))" }} width={28} />
           <Tooltip
             contentStyle={{ background: "hsl(var(--card))", border: "1px solid hsl(var(--border))", borderRadius: 8, fontSize: 12 }}
-            formatter={(value: number) => [`${value}%`, "Completion"]}
+            formatter={(value) => [`${value}%`, "Completion"]}
           />
           <Line type="monotone" dataKey="rate" stroke="hsl(var(--success))" strokeWidth={2} dot={false} />
         </LineChart>
