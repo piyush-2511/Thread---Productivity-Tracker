@@ -63,8 +63,9 @@ export async function getGreeting(): Promise<string> {
       systemInstruction: BUCKET_PROMPTS[bucket],
       history: [],
       message: "Generate the line now.",
-      maxOutputTokens: 30,
+      maxOutputTokens: 60,
       temperature: 0.9,
+      disableThinking : true
     });
     // Guard against runaway output despite maxOutputTokens
     message = message.split("\n")[0].slice(0, 140);

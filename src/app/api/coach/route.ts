@@ -41,8 +41,15 @@ export async function POST(request: Request) {
     const userContext = await buildUserContext();
     const systemInstruction = `${SYSTEM_INSTRUCTION}\n\n--- User's recent data ---\n${userContext}`;
 
-    const reply = await askGemini({ systemInstruction, history, message: message.trim() });
+    // const reply = await askGemini({ systemInstruction, history, message: message.trim() });
 
+    const reply = await askGemini({
+         systemInstruction,
+         history,
+         message: message.trim(),
+         maxOutputTokens: 1024,
+         disableThinking: true,
+      });
     // Persist both turns
     await supabase.from("chat_messages").insert([
       { user_id: user.id, role: "user", content: message.trim() },
